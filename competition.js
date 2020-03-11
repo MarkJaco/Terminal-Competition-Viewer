@@ -87,13 +87,22 @@ class CompetitionTree{
 		return matches[matches.length - 1]
 	}
 
+	get_first_y_len(max_rounds, window_height){
+		let divisor = 0
+		for (var i = 0; i < max_rounds; i++) {
+			divisor += Math.pow(2, i)
+		}
+		return (Math.pow(2, max_rounds - 1) * window_height) / divisor
+	}
+
 	draw(ctx){
-		let first_y_len = 300
+		let xmargin = window.innerWidth / 20
+		let ymargin = window.innerHeight / 20
 		let final_match = this.create_tree()
-		let margin = window.innerWidth / 20
-		final_match.x = window.innerWidth - margin
+		let first_y_len = this.get_first_y_len(final_match.round_num, window.innerHeight - ymargin)
+		final_match.x = window.innerWidth - xmargin
 		final_match.y = window.innerHeight / 2
-		let x_difference = (window.innerWidth - 2*margin) / (final_match.round_num + 1)
+		let x_difference = (window.innerWidth - 2*xmargin) / (final_match.round_num + 1)
 		let queue = [final_match]
 		for(let i = 0; i < queue.length; i++){
 			if(queue[i] == null){continue}
